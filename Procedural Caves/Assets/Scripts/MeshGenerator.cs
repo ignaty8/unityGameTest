@@ -7,6 +7,8 @@ public class MeshGenerator : MonoBehaviour {
 	public SquareGrid squareGrid;
 	public MeshFilter walls;
 
+	public bool is2D;
+
 	List<Vector3> vertices;
 	List<int> triangles;
 
@@ -40,7 +42,9 @@ public class MeshGenerator : MonoBehaviour {
 		mesh.triangles = triangles.ToArray ();
 		mesh.RecalculateNormals ();
 
-		CreateWallMesh ();
+		if (!is2D) {
+			CreateWallMesh ();
+		}
 	}
 
 	void CreateWallMesh(){
@@ -71,6 +75,10 @@ public class MeshGenerator : MonoBehaviour {
 		wallMesh.vertices = wallVertices.ToArray();
 		wallMesh.triangles = wallTriangles.ToArray();
 		walls.mesh = wallMesh;
+
+		// Stuff to add collider to walls :)
+		MeshCollider wallCollider = walls.gameObject.AddComponent<MeshCollider> ();
+		wallCollider.sharedMesh = wallMesh;
 	}
 
 	void TriangulateSquare (Square square){
