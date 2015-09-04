@@ -3,12 +3,12 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-	Rigidbody rigidbody;
+	Rigidbody playerRigidbody;
 	Vector3 velocity;
 
 	// Use this for initialization
 	void Start () {
-		rigidbody = GetComponent<Rigidbody> ();
+		playerRigidbody = GetComponent<Rigidbody> ();
 	}
 	
 	// Update is called once per frame
@@ -17,6 +17,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		rigidbody.MovePosition (rigidbody.position + velocity * Time.fixedDeltaTime);
+		playerRigidbody.MovePosition (playerRigidbody.position + velocity * Time.fixedDeltaTime);
 	}
 }
