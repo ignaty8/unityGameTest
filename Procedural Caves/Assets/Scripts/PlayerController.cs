@@ -22,9 +22,10 @@ public class PlayerController : MonoBehaviour {
 		velocity = new Vector3 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw("Jump"), Input.GetAxisRaw ("Vertical")).normalized * 10;
 
 		float offsetAngle = Vector3.Angle (Vector3.forward, offset);
-		float otherOffsetAngle = Vector3.Angle (Vector3.left, offset);
+		float leftOffsetAngle = Vector3.Angle (Vector3.left, offset);
+		float rightOffsetAngle = Vector3.Angle (Vector3.right, offset);
 
-		if (offsetAngle > otherOffsetAngle) {
+		if (leftOffsetAngle < rightOffsetAngle) {
 			offsetAngle = -offsetAngle;
 		}
 		velocity = Quaternion.Euler (0, offsetAngle, 0) * velocity;
