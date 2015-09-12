@@ -26,7 +26,7 @@ public class HeightmapGenerator : MonoBehaviour {
 	void GenerateHeightmap(){
 		size = (int) Mathf.Pow(2, sizeMagnitude);
 		heightMap = new int[size, size];
-		squareGrids = new Square[size,size,sizeMagnitude];
+		//squareGrids = new Square[size,size,sizeMagnitude];
 		System.Random randomWorldGenerator = new System.Random (worldSeed.GetHashCode ());
 		GenerateStartingSquare (randomWorldGenerator);
 
@@ -42,9 +42,10 @@ public class HeightmapGenerator : MonoBehaviour {
 	void GenerateStartingSquare(System.Random randomWorldSeed){
 		Square startingSquare = new Square (0, 0, sizeMagnitude);
 		heightMap [startingSquare.x1, startingSquare.y1] = randomWorldSeed.Next (minHeight, maxHeight);
-		heightMap [startingSquare.x2, startingSquare.y1] = randomWorldSeed.Next (minHeight, maxHeight);
-		heightMap [startingSquare.x1, startingSquare.y2] = randomWorldSeed.Next (minHeight, maxHeight);
-		heightMap [startingSquare.x2, startingSquare.y2] = randomWorldSeed.Next (minHeight, maxHeight);
+		heightMap [size, startingSquare.y1] = randomWorldSeed.Next (minHeight, maxHeight);
+		heightMap [startingSquare.x1, size] = randomWorldSeed.Next (minHeight, maxHeight);
+		heightMap [size, size] = randomWorldSeed.Next (minHeight, maxHeight);
+		heightMap [size/2, size/2] = randomWorldSeed.Next (minHeight, maxHeight);
 		squareGrids [0, 0, sizeMagnitude] = startingSquare;
 	}
 
@@ -65,17 +66,120 @@ public class HeightmapGenerator : MonoBehaviour {
 		}
 		// This one is already generated
 		//heightMap [square.x1, square.y1] = randomWorldSeed.Next
-		int meanHeightUp = (int) Mathf.RoundToInt((heightMap [containingSquare.x1, containingSquare.y1] + heightMap [containingSquare.x2, containingSquare.y1])/2);
-		heightMap [square.x2, square.y1] = Mathf.RoundToInt(NextGaussianDouble(randomWorldSeed) * standardDeviation) + meanHeightUp;
 
-		int meanHeightLeft = (int) Mathf.RoundToInt((heightMap [containingSquare.x1, containingSquare.y1] + heightMap [containingSquare.x1, containingSquare.y2])/2);
-		heightMap [square.x1, square.y2] = Mathf.RoundToInt(NextGaussianDouble(randomWorldSeed) * standardDeviation) + meanHeightLeft;
+		if (square.squareMagnitude != 0) {
+			int meanHeightCentre = (int)Mathf.RoundToInt ((heightMap [square.x1, square.y1] + heightMap [square.x2, square.y1] + heightMap [square.x1, square.y2] + heightMap [square.x2, square.y2]) / 4);
+			heightMap [square.meanX, square.meanY] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightCentre;
 
-		int meanHeightCentre = (int) Mathf.RoundToInt((heightMap [containingSquare.x1, containingSquare.y1] + heightMap [containingSquare.x2, containingSquare.y1] + heightMap [containingSquare.x1, containingSquare.y2] + heightMap [containingSquare.x2, containingSquare.y2])/4);
-		heightMap [square.x2, square.y2] = Mathf.RoundToInt(NextGaussianDouble(randomWorldSeed) * standardDeviation) + meanHeightCentre;
+			if (!isAtWhichEdge (square.squareX, square.squareY, square.squareMagnitude, 0)) {
+				if (heightMap [square.meanX - square.squareSize, square.meanY] != 0) {
+					int meanHeightLeftCentre = (int)Mathf.RoundToInt ((heightMap [square.x1, square.y1] + heightMap [square.x1 - square.squareSize, square.y1] + heightMap [square.x1, square.y2] + heightMap [square.x1 - square.squareSize, square.y2]) / 4);
+					heightMap [square.meanX - square.squareSize, square.meanY] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightLeftCentre;
+				}
+
+				int meanHeightLeft = (int)Mathf.RoundToInt ((heightMap [square.x1, square.y1] + heightMap [square.meanX - square.squareSize, square.meanY] + heightMap [square.x1, square.y2] + heightMap [square.meanX, square.meanY]) / 4);
+				heightMap [square.x1, square.meanY] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightLeft;
+			} else {
+				int meanHeightLeft = (int)Mathf.RoundToInt ((heightMap [square.x1, square.y1] + heightMap [square.x1, square.y2] + heightMap [square.meanX, square.meanY]) / 3);
+				heightMap [square.x1, square.meanY] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightLeft;
+			}
+
+			if (!isAtWhichEdge (square.squareX, square.squareY, square.squareMagnitude, 1)) {
+				if (heightMap [square.meanX, square.meanY + square.squareSize] != 0) {
+					int meanHeightTopCentre = (int)Mathf.RoundToInt ((heightMap [square.x1, square.y1] + heightMap [square.x1, square.y1 + square.squareSize] + heightMap [square.x2, square.y1] + heightMap [square.x2, square.y1 + square.squareSize]) / 4);
+					heightMap [square.meanX, square.meanY + square.squareSize] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightTopCentre;
+				}
+
+				int meanHeightTop = (int)Mathf.RoundToInt ((heightMap [square.x1, square.y1] + heightMap [square.meanX, square.meanY + square.squareSize] + heightMap [square.x2, square.y1] + heightMap [square.meanX, square.meanY]) / 4);
+				heightMap [square.meanX, square.y1] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightTop;
+			} else {
+				int meanHeightTop = (int)Mathf.RoundToInt ((heightMap [square.x1, square.y1] + heightMap [square.x2, square.y1] + heightMap [square.meanX, square.meanY]) / 3);
+				heightMap [square.meanX, square.y1] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightTop;
+			}
+
+			if (!isAtWhichEdge (square.squareX, square.squareY, square.squareMagnitude, 2)) {
+				if (heightMap [square.meanX + square.squareSize, square.meanY] != 0) {
+					int meanHeightRightCentre = (int)Mathf.RoundToInt ((heightMap [square.x2, square.y1] + heightMap [square.x2 + square.squareSize, square.y1] + heightMap [square.x2, square.y2] + heightMap [square.x2 + square.squareSize, square.y2]) / 4);
+					heightMap [square.meanX + square.squareSize, square.meanY] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightRightCentre;
+				}
+
+				int meanHeightRight = (int)Mathf.RoundToInt ((heightMap [square.x2, square.y1] + heightMap [square.meanX + square.squareSize, square.meanY] + heightMap [square.x2, square.y2] + heightMap [square.meanX, square.meanY]) / 4);
+				heightMap [square.x2, square.meanY] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightRight;
+			} else {
+				int meanHeightRight = (int)Mathf.RoundToInt ((heightMap [square.x2, square.y1] + heightMap [square.x2, square.y2] + heightMap [square.meanX, square.meanY]) / 3);
+				heightMap [square.x1, square.meanY] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightRight;
+			}
+
+			if (!isAtWhichEdge (square.squareX, square.squareY, square.squareMagnitude, 3)) {
+				if (heightMap [square.meanX, square.meanY - square.squareSize] != 0) {
+					int meanHeightBottomCentre = (int)Mathf.RoundToInt ((heightMap [square.x1, square.y2] + heightMap [square.x1, square.y2 + square.squareSize] + heightMap [square.x2, square.y2] + heightMap [square.x2, square.y2 + square.squareSize]) / 4);
+					heightMap [square.meanX, square.meanY - square.squareSize] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightBottomCentre;
+				}
+
+				int meanHeightBottom = (int)Mathf.RoundToInt ((heightMap [square.x1, square.y2] + heightMap [square.meanX, square.meanY - square.squareSize] + heightMap [square.x2, square.y2] + heightMap [square.meanX, square.meanY]) / 4);
+				heightMap [square.meanX, square.y2] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightBottom;
+			} else {
+				int meanHeightBottom = (int)Mathf.RoundToInt ((heightMap [square.x1, square.y2] + heightMap [square.x2, square.y2] + heightMap [square.meanX, square.meanY]) / 3);
+				heightMap [square.meanX, square.y2] = Mathf.RoundToInt (NextGaussianDouble (randomWorldSeed) * standardDeviation) + meanHeightBottom;
+			}
+		}
+
+//		int meanHeightCentre = (int) Mathf.RoundToInt((heightMap [square.x1, square.y1] + heightMap [square.x2, square.y1] + heightMap [square.x1, square.y2] + heightMap [square.x2, square.y2])/4);
+//		heightMap [square.x1, square.y2] = Mathf.RoundToInt(NextGaussianDouble(randomWorldSeed) * standardDeviation) + meanHeightCentre;
+//		//if(isAtWhichEdge == 0
+//		
+//		int meanHeightUp = (int) Mathf.RoundToInt((heightMap [square.x1, square.y1] + heightMap [square.x2, square.y1])/2);
+//		heightMap [square.x2, square.y1] = Mathf.RoundToInt(NextGaussianDouble(randomWorldSeed) * standardDeviation) + meanHeightUp;
+//
+//		int meanHeightLeft = (int) Mathf.RoundToInt((heightMap [square.x1, square.y1] + heightMap [square.x1, square.y2])/2);
+//		heightMap [square.x1, square.y2] = Mathf.RoundToInt(NextGaussianDouble(randomWorldSeed) * standardDeviation) + meanHeightLeft;
 
 		squareGrids[square.squareX, square.squareY, square.squareMagnitude] = square;
 
+	}
+
+	void GenerateNeighbourCentres(){
+
+	}
+	
+
+	// 0 = left, 1 = top, 2 = right, 3 = bottom
+	// 4 = top left, 5 = top right, 6 = bottom right, 7 = bottom left
+	bool isAtWhichEdge(int x, int y, int magnitude, int side) {
+		float size = Mathf.Pow (2, magnitude);
+		switch (side) {
+		case 0:
+			return (x == 0);
+
+		case 1:
+			return (y == 0);
+
+		case 2:
+			return (x >= size-1);
+
+		case 3:
+			return (y >= size-1);
+		}
+		return false;
+
+//		if (x == 0 && y == 0) {
+//			return 4;
+//		} else if (y == 0 && x >= Mathf.Pow (2, magnitude)) {
+//			return 5;
+//		} else if (x >= Mathf.Pow (2, magnitude) || y >= Mathf.Pow (2, magnitude)) {
+//			return 6;
+//		} else if (y >= Mathf.Pow (2, magnitude) || x == 0) {
+//			return 7;
+//		}
+//		if (x == 0) {
+//			return 0;
+//		} else if (x >= Mathf.Pow (2, magnitude)) {
+//			return 2;
+//		} else if (y == 0) {
+//			return 1;
+//		} else if (y >= Mathf.Pow (2, magnitude)) {
+//			return 3;
+//		}
 	}
 
 	//public class SquareGrids{
@@ -101,6 +205,10 @@ public class HeightmapGenerator : MonoBehaviour {
 			x2 = x1 + squareSize;
 			y1 = squareY * squareSize;
 			y2 = y1 + squareSize;
+			if (squareMagnitude != 0){
+				meanX = (x1+x2)/2;
+				meanY = (x1+x2)/2;
+			}
 		}
 	}
 	public static float NextGaussianDouble(System.Random r)
