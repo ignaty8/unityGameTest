@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraController : MonoBehaviour {
+public class FPCameraController : MonoBehaviour {
 	
 	//public GameObject player;
-
+	
 	//private Vector3 playerPos;
 	//private Vector3 oldPlayerPos;
 	private Vector3 offset;
 	//private float offsetDistance;
 	//private float rotOffset;
-
+	
 	//public int lookSensitivity;
 	public int zoom3rdPersonSensitivity = 1;
 	public bool isZoomDirectionInverted = false;
@@ -18,10 +18,10 @@ public class CameraController : MonoBehaviour {
 	public int minZoomDistance = 1;
 	public int maxZoomDistance = 14;
 	private float cameraRotation;
-
+	
 	public Transform target;
-
-	private float distance = 10.0f;
+	
+	private float distance = -0.4f;
 	
 	private float xSpeed = 250.0f;
 	private float ySpeed = 120.0f;
@@ -31,6 +31,8 @@ public class CameraController : MonoBehaviour {
 	
 	private float x = 0.0f;
 	private float y = 0.0f;
+
+	public float cameraHeight = 1.78f;
 	// Use this for initialization
 	void Start () {
 		//offsetDistance = Mathf.Sqrt((transform.position - player.transform.position).sqrMagnitude);	// Watch out: The length of Magnitude is a square!
@@ -52,27 +54,28 @@ public class CameraController : MonoBehaviour {
 		//transform.RotateAround(playerPos, Vector3.up, rotOffset);
 		//transform.rotation = Quaternion.Euler(Mathf.Acos(offset.x),Mathf.Acos(offset.y),Mathf.Acos(offset.z));
 		//if (playerPos != oldPlayerPos) {
-			//offset = (transform.position - player.transform.position).normalized;
-			//transform.position = playerPos + offset * offsetDistance;
+		//offset = (transform.position - player.transform.position).normalized;
+		//transform.position = playerPos + offset * offsetDistance;
 		//}
 		//oldPlayerPos = playerPos;
-
-
+		
+		
 		if (target) {
 			x += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
 			y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
 			if (isZoomDirectionInverted) {
 				zoomDirection = -1;
 			} else { zoomDirection = 1; }
-			float zoom3rdPerson = Input.GetAxis("Mouse ScrollWheel") * zoomDirection;
-			distance += zoom3rdPerson * zoom3rdPersonSensitivity;
-			distance = Mathf.Clamp (distance, minZoomDistance, maxZoomDistance);
-
+//			float zoom3rdPerson = Input.GetAxis("Mouse ScrollWheel") * zoomDirection;
+//			distance += zoom3rdPerson * zoom3rdPersonSensitivity;
+//			distance = Mathf.Clamp (distance, minZoomDistance, maxZoomDistance);
+			
 			y = ClampAngle(y, yMinLimit, yMaxLimit);
 			
 			Quaternion rotation = Quaternion.Euler(y, x, 0);
 			Vector3 distanceVector = new Vector3(0, 0, -distance);
 			Vector3 position = rotation * distanceVector + target.position;
+			position.y += cameraHeight;
 			
 			transform.rotation = rotation;
 			transform.position = position;
@@ -86,7 +89,7 @@ public class CameraController : MonoBehaviour {
 			angle -= 360;
 		return Mathf.Clamp (angle, min, max);
 	}
-
+	
 	/*
 	void Turning(){
 		

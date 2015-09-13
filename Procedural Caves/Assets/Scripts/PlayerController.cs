@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 	
-	public Transform cameraTransform;
+	private Transform cameraTransform;
 	Vector3 offset;
 
 	Rigidbody playerRigidbody;
@@ -12,11 +12,12 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		playerRigidbody = GetComponent<Rigidbody> ();
+		cameraTransform = GameObject.FindGameObjectWithTag ("MainCamera").transform;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		offset = transform.position - cameraTransform.position;
+		offset = -(transform.position - cameraTransform.position);
 		offset.y = 0;
 
 		velocity = new Vector3 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw("Jump"), Input.GetAxisRaw ("Vertical")).normalized * 10;
