@@ -8,7 +8,7 @@ public class BindToHand : MonoBehaviour {
 	Controller controller = new Controller ();
 	GameObject handController, mainCamera;
 
-	public float movementScaleX, movementScaleY, movementScaleZ;
+	public float movementScaleX, movementScaleY, movementScaleZ, offsetX, offsetY, offsetZ;
 	
 	// Use this for initialization
 	void Start () {
@@ -38,7 +38,7 @@ public class BindToHand : MonoBehaviour {
 		//handControllerScript.
 
 		Vector3 handPosition = targetHand.PalmPosition.ToUnityScaled ();
-		handPosition = new Vector3 (handPosition.x * movementScaleX, handPosition.y * movementScaleY, handPosition.z * movementScaleZ);
+		handPosition = new Vector3 (handPosition.x * movementScaleX + offsetX, handPosition.y * movementScaleY + offsetY, handPosition.z * movementScaleZ + offsetZ);
 			
 		//float distance = handPosition.magnitude;
 		//Vector3 distanceVector = new Vector3(0, 0, -distance);

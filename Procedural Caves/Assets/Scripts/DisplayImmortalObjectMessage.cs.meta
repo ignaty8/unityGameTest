@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 6a040c1b564ec304782cab7cb877510e
+timeCreated: 1442261059
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - immortalObject: {fileID: 100060, guid: f06133ca5dd38b14abaf2d097c651b93, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
