@@ -1,16 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\SelfDestruct.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\DestroyBySword.cs">
     <Files>
-      <File FileName="Assets\BindToHand.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Leap Motion\HandPinch.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\FPCameraController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CameraController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MinimapCameraController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DisplayImmortalObjectMessage.cs" Line="88" Column="36" />
+      <File FileName="Assets\NoClipping.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\SelfDestruct.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\DestroyBySword.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DisplayImmortalObjectMessage.cs" Line="27" Column="1" />
-      <File FileName="Assets\SelfDestruct.cs" Line="1" Column="1" />
+      <File FileName="Assets\ControlledSelfDestruct.cs" Line="6" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
