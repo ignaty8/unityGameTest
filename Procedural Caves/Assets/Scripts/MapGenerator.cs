@@ -16,6 +16,9 @@ public class MapGenerator : MonoBehaviour {
 
 	int[,] map;
 
+	//public int typesOfObjectsToSpawn = 4;
+	public List<GameObject> objectsToSpawn = new List<GameObject>();
+
 	void Start(){
 
 		GenerateMap ();
@@ -54,6 +57,14 @@ public class MapGenerator : MonoBehaviour {
 
 		MeshGenerator meshGen = GetComponent<MeshGenerator> ();
 		meshGen.GenerateMesh (borderedMap, 1);
+
+		// 
+		PropPlacer propPlacer = GetComponent<PropPlacer> ();
+		foreach(GameObject objectToSpawn in objectsToSpawn){
+			if (objectToSpawn != null){
+				propPlacer.ObjectMapGenerator(map, 1, seed, 10, objectToSpawn);
+			}
+		}
 	}
 
 	void ProcessMap() {

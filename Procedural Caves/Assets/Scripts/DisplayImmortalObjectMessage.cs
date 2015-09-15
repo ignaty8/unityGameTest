@@ -13,6 +13,9 @@ public class DisplayImmortalObjectMessage : MonoBehaviour {
 	private bool hasHit = false;
 	private bool hasTriggered = false;
 
+	// Sword Stats
+	public float swordDamage = 1f;
+
 	// Use this for initialization
 	void Start () {
 		mainCamera = GameObject.FindGameObjectWithTag ("MainCamera");
@@ -85,7 +88,7 @@ public class DisplayImmortalObjectMessage : MonoBehaviour {
 			//hasTriggered = true;
 		} else if (other.tag == "Destructible") {
 			ControlledSelfDestruct destructScript = other.GetComponent<ControlledSelfDestruct>();
-			destructScript.InitiateRemove();
+			destructScript.DamageObject(swordDamage);
 		}
 	}
 

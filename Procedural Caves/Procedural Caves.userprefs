@@ -1,12 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\DestroyBySword.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PropPlacer.cs">
     <Files>
-      <File FileName="Assets\Scripts\DisplayImmortalObjectMessage.cs" Line="88" Column="36" />
-      <File FileName="Assets\NoClipping.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\SelfDestruct.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DestroyBySword.cs" Line="1" Column="1" />
-      <File FileName="Assets\ControlledSelfDestruct.cs" Line="6" Column="2" />
+      <File FileName="Assets\ControlledSelfDestruct.cs" Line="54" Column="30" />
+      <File FileName="Assets\Scripts\FXSpawnMesh.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MapGenerator.cs" Line="65" Column="67" />
+      <File FileName="Assets\Scripts\MeshGenerator.cs" Line="407" Column="1" />
+      <File FileName="Assets\Scripts\PropPlacer.cs" Line="22" Column="56" />
+      <File FileName="Assets\Scripts\DisplayImmortalObjectMessage.cs" Line="90" Column="42" />
+      <File FileName="Assets\Scripts\HeightmapGenerator.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
