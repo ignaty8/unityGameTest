@@ -22,6 +22,14 @@ public class PropPlacer : MonoBehaviour {
 	/// <param name="spawnChance">Spawn chance out of 1000.</param>
 	/// <param name="objectToSpawn">Object to spawn.</param>
 	public void ObjectMapGenerator(int[,] levelMap, float squareSize, string randomSeed, int spawnChance, GameObject objectToSpawn){
+//		GameObject[] allCurrentInstances;
+//		while (objectToSpawn.ToString() != null){
+//			allCurrentInstances[allCurrentInstances.GetLength(0)] = GameObject.Find (objectToSpawn.ToString());
+//		}
+//
+//		foreach (GameObject objectInstance in allCurrentInstances) {
+//			Destroy(objectInstance);
+//		}
 
 		System.Random pseudoRandom = new System.Random (randomSeed.GetHashCode ());
 

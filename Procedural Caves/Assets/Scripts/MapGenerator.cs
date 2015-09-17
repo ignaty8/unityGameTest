@@ -58,6 +58,15 @@ public class MapGenerator : MonoBehaviour {
 		MeshGenerator meshGen = GetComponent<MeshGenerator> ();
 		meshGen.GenerateMesh (borderedMap, 1);
 
+
+		GameObject[] allCurrentInstances;
+
+		allCurrentInstances = GameObject.FindGameObjectsWithTag ("Destructible");
+		
+		foreach (GameObject objectInstance in allCurrentInstances) {
+			Destroy(objectInstance);
+		}
+
 		// 
 		PropPlacer propPlacer = GetComponent<PropPlacer> ();
 		foreach(GameObject objectToSpawn in objectsToSpawn){
