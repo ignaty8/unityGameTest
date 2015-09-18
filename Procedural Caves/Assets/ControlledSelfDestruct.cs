@@ -11,16 +11,27 @@ public class ControlledSelfDestruct : MonoBehaviour {
 
 	public float fxDelay = 2;
 
-	public float objectHelath = 1;
+	public float objectHelath;
 	private bool destroyed = false;
 
+	private HealthController healthController;
+
+	void Start(){
+		healthController = GetComponent<HealthController> ();
+		CheckHealth ();
+	}
+
+	void Update(){
+		CheckHealth ();
+	}
+
 	/// <summary>
-	/// Damages the object. This method is called by the sword when it collides with an object tagged "Destructible".
+	/// Checks whether the object's health (stored in HealthController.cs script) has reached 0.
 	/// </summary>
 	/// <para>If objectHelath reaches 0, initiates object's destruction.</para>
 	/// <param name="damage">float corresponding to damage dealt.</param>
-	public void DamageObject(float damage){
-		objectHelath -= damage;
+	public void CheckHealth(){
+		objectHelath = healthController.objectHealth;
 		if (objectHelath <= 0 && !destroyed) {
 			destroyed = true;
 			InitiateRemove();

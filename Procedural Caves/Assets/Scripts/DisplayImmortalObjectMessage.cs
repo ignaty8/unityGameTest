@@ -86,9 +86,9 @@ public class DisplayImmortalObjectMessage : MonoBehaviour {
 			//}
 
 			//hasTriggered = true;
-		} else if (other.tag == "Destructible") {
-			ControlledSelfDestruct destructScript = other.GetComponent<ControlledSelfDestruct>();
-			destructScript.DamageObject(swordDamage);
+		} else if (other.tag == "Destructible") {	// Damages any object tagged as "Destructible".
+			HealthController healthControllerScript = other.GetComponent<HealthController>();
+			healthControllerScript.TakeDamage(swordDamage);
 		}
 	}
 
