@@ -6,8 +6,8 @@ public class HealthMonitor : MonoBehaviour {
 	public float parentObjectHealth;
 	float parentHealthMax;
 	float oldParentObjectHealth;
-	int healthPercentage;
-	float displayedHealth;
+	int healthPercentage = 100;
+	float displayedHealth = 100;
 	public float uiUpdateSpeed;
 
 	Texture uiTexture;
@@ -51,11 +51,11 @@ public class HealthMonitor : MonoBehaviour {
 		}
 
 		if (parentObjectHealth != oldParentObjectHealth) {	
-			Debug.Log (parentObjectHealth);
+			//Debug.Log (parentObjectHealth);
 			float tmp = parentObjectHealth / parentHealthMax * 100f;
-			Debug.Log ("tmp" + tmp.ToString());
+			//Debug.Log ("tmp" + tmp.ToString());
 			healthPercentage = Mathf.CeilToInt (tmp);
-			Debug.Log (healthPercentage);
+			//Debug.Log (healthPercentage + "%");
 
 
 			if (displayedHealth <= 0){

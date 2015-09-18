@@ -31,6 +31,8 @@ public class CameraController : MonoBehaviour {
 	
 	private float x = 0.0f;
 	private float y = 0.0f;
+
+
 	// Use this for initialization
 	void Start () {
 		//offsetDistance = Mathf.Sqrt((transform.position - player.transform.position).sqrMagnitude);	// Watch out: The length of Magnitude is a square!

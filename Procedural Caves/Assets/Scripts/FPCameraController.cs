@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Leap;
 
 public class FPCameraController : MonoBehaviour {
 	
@@ -33,6 +34,16 @@ public class FPCameraController : MonoBehaviour {
 	private float y = 0.0f;
 
 	public float cameraHeight = 1.78f;
+	
+	
+	// Some Leap Motion stuff:
+	Controller controller = new Controller ();
+	
+	public float turnSensitivity = 8;
+	public bool isLookInverted = false;
+
+	public float verticalSensitivity = 4;
+
 	// Use this for initialization
 	void Start () {
 		//offsetDistance = Mathf.Sqrt((transform.position - player.transform.position).sqrMagnitude);	// Watch out: The length of Magnitude is a square!
@@ -42,6 +53,10 @@ public class FPCameraController : MonoBehaviour {
 		Vector3 angles = transform.eulerAngles;
 		x = angles.y;
 		y = angles.x;
+	}
+	
+	void Update() {
+		CheckHand ();
 	}
 	
 	// LateUpdate is run just after Update!
@@ -106,4 +121,38 @@ public class FPCameraController : MonoBehaviour {
 			playerRigidbody.MoveRotation (newRotation);
 		}
 	}*/
+	
+	void CheckHand(){
+		Frame frame = controller.Frame ();
+		HandList hands = frame.Hands;
+		foreach (Hand hand in hands) {
+			if(hand.IsValid){
+				if(hand.IsLeft){
+					LeapTurnCamera(hand);
+				}
+			}
+		}
+	}
+	
+	void LeapTurnCamera(Hand hand){
+		// Warning, this is in radians!
+		float handRoll = hand.PalmNormal.Roll;
+		//Debug.Log (handRoll);
+		int invert = -1;
+		if (isLookInverted) {
+			invert = 1;
+		}
+
+		if ((handRoll > .5f && handRoll < Mathf.PI - .5f) || (handRoll < -.5f && handRoll > -Mathf.PI - .5f)) {
+			//transform.RotateAround(transform.position, Vector3.up, handRoll * Time.deltaTime * turnSensitivity);
+			x += invert * handRoll * turnSensitivity;
+		}
+
+		float palmVelocityVertical = hand.PalmVelocity.y;
+		//Debug.Log (palmVelocityVertical);
+		if(palmVelocityVertical > 60f || palmVelocityVertical < -60f){
+
+			y -= palmVelocityVertical * Time.deltaTime * verticalSensitivity;
+		}
+	}
 }
