@@ -156,6 +156,7 @@
      <Compile Include="Assets\Scripts\HealthMonitor.cs" />
      <Compile Include="Assets\Scripts\HeightmapGenerator.cs" />
      <Compile Include="Assets\Scripts\Leap Motion\HandPinch.cs" />
+     <Compile Include="Assets\Scripts\Leap Motion\ToggleUIMenu.cs" />
      <Compile Include="Assets\Scripts\MapGenerator.cs" />
      <Compile Include="Assets\Scripts\MeshGenerator.cs" />
      <Compile Include="Assets\Scripts\MinimapCameraController.cs" />
