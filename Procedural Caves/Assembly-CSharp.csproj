@@ -110,6 +110,7 @@
      <Compile Include="Assets\LeapMotion\Widgets\Scripts\Button\ButtonBase.cs" />
      <Compile Include="Assets\LeapMotion\Widgets\Scripts\Button\ButtonToggleBase.cs" />
      <Compile Include="Assets\LeapMotion\Widgets\Scripts\DemoScripts\ButtonDemoGraphics.cs" />
+     <Compile Include="Assets\LeapMotion\Widgets\Scripts\DemoScripts\ButtonDemoNoToggle.cs" />
      <Compile Include="Assets\LeapMotion\Widgets\Scripts\DemoScripts\ButtonDemoToggle.cs" />
      <Compile Include="Assets\LeapMotion\Widgets\Scripts\DemoScripts\SliderDemo.cs" />
      <Compile Include="Assets\LeapMotion\Widgets\Scripts\DemoScripts\SliderDemoGraphics.cs" />
@@ -152,9 +153,11 @@
      <Compile Include="Assets\Scripts\DisplayImmortalObjectMessage.cs" />
      <Compile Include="Assets\Scripts\FPCameraController.cs" />
      <Compile Include="Assets\Scripts\FXSpawnMesh.cs" />
+     <Compile Include="Assets\Scripts\GenerateNewLevel.cs" />
      <Compile Include="Assets\Scripts\HealthController.cs" />
      <Compile Include="Assets\Scripts\HealthMonitor.cs" />
      <Compile Include="Assets\Scripts\HeightmapGenerator.cs" />
+     <Compile Include="Assets\Scripts\Leap Motion\ButtonNoToggleBase.cs" />
      <Compile Include="Assets\Scripts\Leap Motion\HandPinch.cs" />
      <Compile Include="Assets\Scripts\Leap Motion\ToggleUIMenu.cs" />
      <Compile Include="Assets\Scripts\MapGenerator.cs" />

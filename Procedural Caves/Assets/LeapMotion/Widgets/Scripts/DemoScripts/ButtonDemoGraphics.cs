@@ -20,7 +20,14 @@ public class ButtonDemoGraphics : MonoBehaviour
 		foreach(Image image in GUIimages){
 			image.enabled = status;
 		}
-		
+
+		// User added
+		Collider[] colliders = GetComponentsInChildren<Collider> ();
+		foreach (Collider collider in colliders) {
+			collider.enabled = status;
+		}
+
+		//GameObject[] onGraphicsOfChildren = GameObject.FindGameObjectsWithTag ("OnGraphics");
 	}
 	
 	public void SetColor(Color color)
