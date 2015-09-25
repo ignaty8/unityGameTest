@@ -27,7 +27,38 @@ public class ButtonDemoGraphics : MonoBehaviour
 			collider.enabled = status;
 		}
 
-		//GameObject[] onGraphicsOfChildren = GameObject.FindGameObjectsWithTag ("OnGraphics");
+		if (status) {
+//			GameObject[] onGraphicsOfChildren = GameObject.FindGameObjectsWithTag ("OnGraphics");
+//			foreach (GameObject candidateObject in onGraphicsOfChildren) {
+//				if (!candidateObject.transform.parent.gameObject.GetComponent<Renderer>().enabled){
+//
+//				}
+//			}
+
+			foreach (Transform childTransform in transform){
+				foreach (Transform child2Transform in childTransform){
+					foreach (Transform child3Transform in child2Transform){
+				Debug.Log (childTransform.name);
+				if(child3Transform.tag == "OnGraphics"){
+					
+					//Debug.Log ("Success");
+					Renderer[] childRenderers = child3Transform.GetComponentsInChildren<Renderer>();
+					Text[] childTexts = child3Transform.GetComponentsInChildren<Text>();
+					Image[] childGUIimages = child3Transform.GetComponentsInChildren<Image>();
+					foreach (Renderer renderer in childRenderers){
+						renderer.enabled = false;
+					}
+					foreach(Text text in childTexts){
+						text.enabled = false;
+					}
+					foreach(Image image in childGUIimages){
+						image.enabled = false;
+					}
+				}
+					}
+				}
+			}
+		}
 	}
 	
 	public void SetColor(Color color)
