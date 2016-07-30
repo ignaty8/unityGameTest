@@ -44,15 +44,26 @@ public class PropPlacer : MonoBehaviour {
 				if (levelMap[x,y] == 0){
 					//Debug.Log (x);
 					// Inside each square marked as "room" on the map, there is a chance the object will be instantiated.
-					if (pseudoRandom.Next(1, 1000) < spawnChance){
-						// The position of the object is also randomized within the square.
-						float randomOffsetX = (float) pseudoRandom.NextDouble() * squareSize;
+					if (pseudoRandom.Next(1, 10000) < spawnChance){
+
+                        // The position of the object is also randomized within the square.
+                        float randomOffsetX = (float) pseudoRandom.NextDouble() * squareSize;
 						float randomOffsetY = (float) pseudoRandom.NextDouble() * squareSize;
 						Vector3 objectPosition = new Vector3(x * squareSize + randomOffsetX - levelMapWidth/2, 0, y * squareSize + randomOffsetY - levelMapHeight/2);
-						GameObject spawnedInstance = (GameObject) Instantiate(objectToSpawn, objectPosition, Quaternion.Euler(0, pseudoRandom.Next(0,360), 0));
+						GameObject spawnedInstance = (GameObject) Instantiate(objectToSpawn, objectPosition, Quaternion.Euler(0 + objectToSpawn.transform.rotation.eulerAngles.x, pseudoRandom.Next(0,360) + objectToSpawn.transform.rotation.eulerAngles.y, 0 + objectToSpawn.transform.rotation.eulerAngles.z));
 
-						// If spawned GameObject is a Destructible, spawn a child HelathBar
-						if(objectToSpawn.tag == "Destructible"){
+                        // Add instance to the spawned object record. This allows it to be removed when a new map is generated.
+                        GameObject.FindGameObjectWithTag("MapGenerator").GetComponent<MapGenerator>().spawnedObjects.Add(spawnedInstance);
+
+                        // Generator substructures for "structure" objects.
+                        if (objectToSpawn.tag == "Structure")
+                        {
+                            StructureGenerator structureGeneratorScript = objectToSpawn.GetComponent<StructureGenerator>();
+                            structureGeneratorScript.GenerateSubstructures(levelMap, spawnedInstance, x, y, randomSeed);
+                        }
+
+                        // If spawned GameObject is a Destructible, spawn a child HelathBar
+                        if (objectToSpawn.tag == "Destructible"){
 							Collider spawnedObjectCollider = spawnedInstance.GetComponent<Collider> ();
 
 							GameObject healthBarInstance = (GameObject) Instantiate(healthBar, spawnedInstance.transform.position, spawnedInstance.transform.rotation * Quaternion.Euler (270,0,0));

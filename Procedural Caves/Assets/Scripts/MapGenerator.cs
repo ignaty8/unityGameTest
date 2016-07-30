@@ -17,9 +17,17 @@ public class MapGenerator : MonoBehaviour {
 	int[,] map;
 
 	//public int typesOfObjectsToSpawn = 4;
-	public List<GameObject> objectsToSpawn = new List<GameObject>();
 
-	void Start(){
+    public static int generatedStructureTypeCount = 0;
+    // Make sure each array below has same length!
+	public List<GameObject> objectsToSpawn = new List<GameObject>(generatedStructureTypeCount);
+    // Stores object spawn chances in int out of 10k
+    public List<int> objectSpawnChance = new List<int>();
+
+    public List<GameObject> spawnedObjects = new List<GameObject>();
+
+
+    void Start(){
 
 		GenerateMap ();
 	}
@@ -63,15 +71,19 @@ public class MapGenerator : MonoBehaviour {
 
 		allCurrentInstances = GameObject.FindGameObjectsWithTag ("Destructible");
 		
-		foreach (GameObject objectInstance in allCurrentInstances) {
+        // Make sure previously generated objects are removed.
+		foreach (GameObject objectInstance in spawnedObjects) {
 			Destroy(objectInstance);
 		}
 
 		// 
 		PropPlacer propPlacer = GetComponent<PropPlacer> ();
-		foreach(GameObject objectToSpawn in objectsToSpawn){
+		for(int k = 0; k < objectsToSpawn.Count; k++){
+            GameObject objectToSpawn = objectsToSpawn[k];
 			if (objectToSpawn != null){
-				propPlacer.ObjectMapGenerator(map, 1, seed, 10, objectToSpawn);
+                // To ensure random distribution, the seed is modified depending on object order in the list.
+                // Without that having the same @spawn chance@ spawns things in the same place.
+				propPlacer.ObjectMapGenerator(map, 1, seed + k, objectSpawnChance[k], objectToSpawn);
 			}
 		}
 	}

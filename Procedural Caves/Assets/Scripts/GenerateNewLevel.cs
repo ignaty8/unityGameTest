@@ -9,7 +9,7 @@ public class GenerateNewLevel : MonoBehaviour {
 	ButtonDemoNoToggle onGraphics;
 	bool pressed = false;
 
-	// Use this for initialization
+	// Use this for initialization - why do I never comment stuff :'(
 	void Start () {
 		onGraphics = transform.parent.FindChild ("Button").GetComponent<ButtonDemoNoToggle>();
 	}
