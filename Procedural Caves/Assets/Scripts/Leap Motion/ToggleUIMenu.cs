@@ -32,6 +32,7 @@ public class ToggleUIMenu : MonoBehaviour {
 	void FixedUpdate () {
 		if (timer < Time.time) {
 			CheckGesture ();
+            CheckButton();
 		}
 	}
 
@@ -49,6 +50,14 @@ public class ToggleUIMenu : MonoBehaviour {
 			}
 		}
 	}
+
+    void CheckButton()
+    {
+        if (Input.GetKeyDown("k"))
+        {
+            ToggleMenuState();
+        }
+    }
 
 	void ToggleMenuState(){
 		isMenuVisible = !isMenuVisible;

@@ -83,7 +83,7 @@ public class MapGenerator : MonoBehaviour {
 			if (objectToSpawn != null){
                 // To ensure random distribution, the seed is modified depending on object order in the list.
                 // Without that having the same @spawn chance@ spawns things in the same place.
-				propPlacer.ObjectMapGenerator(map, 1, seed + k, objectSpawnChance[k], objectToSpawn);
+				propPlacer.ObjectMapGenerator(map, 1, seed + k, 0, objectToSpawn);
 			}
 		}
 	}
