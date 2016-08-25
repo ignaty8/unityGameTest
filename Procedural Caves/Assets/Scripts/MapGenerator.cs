@@ -76,7 +76,9 @@ public class MapGenerator : MonoBehaviour {
 			Destroy(objectInstance);
 		}
 
-		// 
+        PathGridGenerator gridGenerator = GetComponent<PathGridGenerator>();
+        PathGridGenerator.Graph pathfindingGraph = gridGenerator.PathGridCreator(map);
+
 		PropPlacer propPlacer = GetComponent<PropPlacer> ();
 		for(int k = 0; k < objectsToSpawn.Count; k++){
             GameObject objectToSpawn = objectsToSpawn[k];
