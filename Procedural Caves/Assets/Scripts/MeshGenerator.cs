@@ -76,11 +76,19 @@ public class MeshGenerator : MonoBehaviour {
 		wallMesh.triangles = wallTriangles.ToArray();
 		walls.mesh = wallMesh;
 
+        // Removes old colliders from previous terrain generations.
+
 		MeshCollider oldWallCollider = walls.gameObject.GetComponent<MeshCollider> ();
 		Destroy (oldWallCollider);
+        MeshCollider oldPlateauCollider = gameObject.GetComponent<MeshCollider>();
+        Destroy(oldPlateauCollider);
 		// Stuff to add collider to walls :)
 		MeshCollider wallCollider = walls.gameObject.AddComponent<MeshCollider> ();
 		wallCollider.sharedMesh = wallMesh;
+
+        // Tries to add collision to top of walls
+        MeshCollider plateauCollider = gameObject.AddComponent<MeshCollider> ();
+        plateauCollider.sharedMesh = GetComponent<MeshFilter>().mesh;
 	}
 
 	void TriangulateSquare (Square square){
