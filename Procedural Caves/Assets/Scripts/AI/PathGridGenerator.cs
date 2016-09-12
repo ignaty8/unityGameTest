@@ -35,26 +35,40 @@ public class PathGridGenerator : MonoBehaviour {
 
     public class Graph {
 
+        private SortedDictionary<Coords,Node> dictionary;
+
         // This Set type will make sure there are no duplicate nodes. (I think)
+        // Not quite, since there is no compare method in Node right now... 2016.09.12
         private HashSet<Node> nodes;
 
         public Graph() {
-
+            dictionary = new SortedDictionary<Coords, Node>(new CoordsComparerFull());
             nodes = new HashSet<Node>();
+        }
+
+        public Graph(Graph graph) {
+            dictionary = new SortedDictionary<Coords, Node>(graph.GetDictionary(), new CoordsComparerFull());
+        }
+
+        public SortedDictionary<Coords,Node> GetDictionary() {
+            return dictionary;
         }
         // Installs 2-way links between nodes.
         public void Add(Node node) {
 
-            nodes.Add(node);
-            foreach (Node n in node.neighbours) {
-                n.neighbours.Add(node);
+            dictionary.Add(node.coords, node);
+
+            //nodes.Add(node);
+            foreach (Coords n in node.neighbours) {
+                dictionary[n].neighbours.Add(n);
             }
         }
         // Cleans up 2-way links between nodes.
-        public void Remove(Node node) {
-            nodes.Remove(node);
-            foreach(Node n in node.neighbours) {
-                n.neighbours.Remove(node);
+        public void Remove(Coords c) {
+            dictionary.Remove(c);
+            //nodes.Remove(node);
+            foreach(Coords n in dictionary[c].neighbours) {
+                dictionary[n].neighbours.Remove(c);
             }
         }
 
@@ -90,17 +104,17 @@ public class PathGridGenerator : MonoBehaviour {
 
         public Coords coords;
 
-        public HashSet<Node> neighbours;
+        public HashSet<Coords> neighbours;
 
-        public Hash128 hash;
+        //public Hash128 hash;
 
         public Node(Coords coords) {
             this.coords = coords.copy();
             //hash = new Hash128(coords.x);
-            neighbours = new HashSet<Node>();
+            neighbours = new HashSet<Coords>(new CoordsComparer());
         }
 
-        public Node(Coords coords, HashSet<Node> neighbours) {
+        public Node(Coords coords, HashSet<Coords> neighbours) {
             this.coords = coords.copy();
             this.neighbours = neighbours;
         }
@@ -115,6 +129,19 @@ public class PathGridGenerator : MonoBehaviour {
         // But I don't even know what this will be used for.
         public int GetHashCode(Coords obj) {
             return (((int) (obj.x * 1/COORD_SENSITIVITY)).GetHashCode() * 179424691 + ((int)(obj.y * 1 / COORD_SENSITIVITY)).GetHashCode()) * 179425033 + ((int)(obj.z * 1 / COORD_SENSITIVITY)).GetHashCode();
+        }
+    }
+
+    public class CoordsComparerFull : IComparer<Coords> {
+        public int Compare(Coords x, Coords y) {
+            if (PathGridGenerator.adjacentDoubles(x.x, y.x) && PathGridGenerator.adjacentDoubles(x.y, y.y) && PathGridGenerator.adjacentDoubles(x.z, y.z)) {
+                return 0;
+            } else if((!PathGridGenerator.adjacentDoubles(x.x, y.x) && x.x > y.x) || (PathGridGenerator.adjacentDoubles(x.x, y.x) && !PathGridGenerator.adjacentDoubles(x.y, y.y) && x.y > y.y) 
+                || (PathGridGenerator.adjacentDoubles(x.x, y.x) && PathGridGenerator.adjacentDoubles(x.y, y.y) && !PathGridGenerator.adjacentDoubles(x.z, y.z) && x.z > y.z)) {
+                return 1;
+            } else {
+                return -1;
+            }
         }
     }
 
