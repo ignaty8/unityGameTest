@@ -9,6 +9,8 @@ public class PathGridGenerator : MonoBehaviour {
 
     // Min distance between separate points on all 3 axes.
     public const double COORD_SENSITIVITY = 0.01;
+	//nothin in this code should be bigger
+	static float infinity =100000000;
 
 	// Use this for initialization
 	void Start () {
@@ -100,25 +102,58 @@ public class PathGridGenerator : MonoBehaviour {
         }
     }
 
-    public class Node{
+	//So I need to change the node class a tiny bit
+	public class Node{
 
-        public Coords coords;
+		public Coords coords;
 
-        public HashSet<Coords> neighbours;
+		public HashSet<Coords> neighbours;
 
-        //public Hash128 hash;
+		//Added Part
+		//this value estimates the "cost" of going from the origin to this Node in the a* algo
+		public float gcost;
+		//this value estimates the "cost" of going from the destination to this Node in the a* algo
+		public float hcost;
+		//unnecessary, just the sum of gcost & hcost. we COULD use this instead of hcost
+		//unless it proves more efficient in someway I won't though
+		//public float fcost;
+		//Used in the algo again, its the best coord to go to this Node
+		public Coords CameFrom;
 
-        public Node(Coords coords) {
-            this.coords = coords.copy();
-            //hash = new Hash128(coords.x);
-            neighbours = new HashSet<Coords>(new CoordsComparer());
-        }
 
-        public Node(Coords coords, HashSet<Coords> neighbours) {
-            this.coords = coords.copy();
-            this.neighbours = neighbours;
-        }
-    }
+
+		//public Hash128 hash;
+
+		public Node(Coords coords) {
+			this.coords = coords.copy();
+			//hash = new Hash128(coords.x);
+			neighbours = new HashSet<Coords>(new CoordsComparer());
+			//Setting Standard Value
+			gcost = infinity;
+			hcost = infinity;
+			CameFrom = new Coords(0,0,0);
+		}
+
+		public Node(Coords coords, HashSet<Coords> neighbours) {
+			this.coords = coords.copy();
+			this.neighbours = neighbours;
+			//Setting Standard Value
+			gcost = infinity;
+			hcost = infinity;
+			CameFrom = new Coords(0,0,0);
+		}
+
+		//This returns the total "cost" of going through this node to go to the destination
+		public float GetFcost(){
+			return gcost+hcost;
+		}
+
+		//Generates an approximation of the cost of getting to the destination (higly inacurate)
+		public float EstimateHCost(Coords destination){
+			//Our "Estimation" is just going to be calculating the distance from here to there
+			return (float)GetDistance(destination,coords);
+		}
+	}
 
     public class CoordsComparer : IEqualityComparer<Coords> {
         public bool Equals(Coords x, Coords y) {
@@ -164,4 +199,29 @@ public class PathGridGenerator : MonoBehaviour {
     public static bool adjacentDoubles(double x, double y) {
         return x - COORD_SENSITIVITY < y && x + COORD_SENSITIVITY > y;
     }
+
+
+	//Some Functions From PathFinder
+	//Fairly Straighforward I think
+	static double GetDistance(Coords coords_01, Coords coords_02){
+		double output;
+
+		output = 
+			square(coords_01.x - coords_02.x)
+			+ square(coords_01.y - coords_02.y)
+			+ square(coords_01.z - coords_02.z);
+
+		return root2(output);
+	}
+
+	//For cleanliness
+	static double square(double double_){
+		return Math.Pow(double_,2);
+	}
+
+	static double root2(double double_){
+		return Math.Sqrt (double_);
+	}
 }
+
+
