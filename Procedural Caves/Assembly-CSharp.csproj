@@ -152,6 +152,7 @@
      <Compile Include="Assets\Scripts\AI\BaseAI.cs" />
      <Compile Include="Assets\Scripts\AI\PathFinder.cs" />
      <Compile Include="Assets\Scripts\AI\PathGridGenerator.cs" />
+     <Compile Include="Assets\Scripts\AI\PuritySentinel.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\DestroyBySword.cs" />
      <Compile Include="Assets\Scripts\DisplayImmortalObjectMessage.cs" />

@@ -17,7 +17,7 @@ public class AIType : MonoBehaviour {
 	//Height of creature
 	public Vector3 height;
 	//type
-	public string type;
+	public string TypeName;
 	//Reference to BaseAI
 	public BaseAI Base;
 
@@ -28,6 +28,9 @@ public class AIType : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
+		if(TypeName == "PuritySentinel"){
+			PuritySentinel script = GetComponent<PuritySentinel>;
+		}
 	}
 	
 	// Update is called once per frame
@@ -35,17 +38,20 @@ public class AIType : MonoBehaviour {
 	
 	}
 
-	public void Act(){
-		
+	public void act(){
+		//Acting
+	}
+
+	public void idle(){
+		//Idling
 	}
 
 	public void RangeCheck(){
 		Vector3 RangeVector = player.transform.position - transform.position;
-			if(RangeVector.Magnitude <= SpecBehavRange){
-				
+		if(RangeVector.Magnitude <= SpecBehavRange){
+			if(TypeName == "PuritySentinel"){
+				script
 			}
-	}
-
-	public void initialisetype(){
+		}
 	}
 }

@@ -118,24 +118,12 @@ public class BaseAI : MonoBehaviour {
 		//Checking if we noticed player if yes pursue & attack, otherwise just chill
 		if (noticed) {
 			//Act & Idle are PlaceHolders, They will be in separate classes in the end
-			Act ();
+			type.act ();
 		} else {
 			//Act & Idle are PlaceHolders, They will be in separate classes in the end
-			Idle ();
+			type.idle ();
 		}
 	}
-
-	//Takes Action if player is noticed
-	void Act(){
-		//Do Stuff
-	}
-
-
-	//Takes Action if player is unnoticed
-	void Idle(){
-		//Do Stuff
-	}
-
 
 	//Check Notice//
 	void CheckNotice (){
