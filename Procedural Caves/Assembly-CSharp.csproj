@@ -148,6 +148,8 @@
      <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
      <Compile Include="Assets\OVR\Scripts\Util\OVRUGUI.cs" />
      <Compile Include="Assets\OVR\Scripts\Util\OVRVisionGuide.cs" />
+     <Compile Include="Assets\Scripts\AI\AIType.cs" />
+     <Compile Include="Assets\Scripts\AI\BaseAI.cs" />
      <Compile Include="Assets\Scripts\AI\PathFinder.cs" />
      <Compile Include="Assets\Scripts\AI\PathGridGenerator.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
