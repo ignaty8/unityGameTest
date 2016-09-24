@@ -37,7 +37,8 @@ public class PathFinder : MonoBehaviour {
 	//Pathfinder function//
 
 	//Pathfinder function//
-	//PAthGridGenerator is another Script/monobehaviour class containing the Node & Coords Class
+
+	//PathGridGenerator is another Script/monobehaviour class containing the Node & Coords Class
 	public List<NodePathFinder> Pathfinder(PathGridGenerator.Coords OriginCoords, PathGridGenerator.Coords DestinationCoords, PathGridGenerator.Graph graph){
 		//This pathfinder uses the standard A* pathfinding program
 
@@ -107,15 +108,18 @@ public class PathFinder : MonoBehaviour {
 				//Setting them up in the system (ie adding the NeighbouringNode)
 				NeighbouringNode = GetNewNodePathfinder (dictionary, InternalMemory, neighbour);
 				if(CurrentNode == destination){
-					return GetPath(origin,CurrentNode,dictionary);
+					//if we arrived then we use the memory stored in each node of where it came from to backtrack
+					return GetPath(origin,CurrentNode,InternalMemory);
 				}
 
 				//Skip this whole procedure if we already dealt with that neighbour
 				if(ClosedNodes.Contains(NeighbouringNode)){
 					continue;
 				}
+
 				//Estimate of distance between start & here
 				temp_gcost = CurrentNode.gcost + (float)GetDistance(NeighbouringNode.coords,CurrentNode.coords);
+
 
 				if(OpenNodes.Contains(NeighbouringNode) == false){
 					//If Neighbouring Node has not been considered yet then consider it now
@@ -132,7 +136,7 @@ public class PathFinder : MonoBehaviour {
 				NeighbouringNode.gcost = temp_gcost;
 				//Saving better hcost
 				NeighbouringNode.hcost = NeighbouringNode.EstimateHCost(destination.coords);
-				//saving better CameFrom
+				//saving better CameFrom, to be used now for backtracking
 				NeighbouringNode.CameFrom = CurrentNode.coords;
 
 			}
@@ -140,7 +144,9 @@ public class PathFinder : MonoBehaviour {
 
 		}
 
-		return GetPath (origin,origin,dictionary);
+		//this actually should NEVER happen, but just in case
+		//at worst this pathfinder makes you immobile
+		return GetPath (origin,origin,InternalMemory);
 
 
 	}
