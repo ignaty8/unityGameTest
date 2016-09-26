@@ -1,18 +1,21 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AI\AIType.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AI\Move.cs">
     <Files>
-      <File FileName="Assets\Scripts\AI\PathGridGenerator.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\PathFinder.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI\PathGridGenerator.cs" Line="11" Column="1" />
+      <File FileName="Assets\Scripts\AI\PathFinder.cs" Line="5" Column="14" />
       <File FileName="Assets\Scripts\MeshGenerator.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GenerateNewLevel.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GenerateNewLevel.cs" Line="21" Column="2" />
       <File FileName="Assets\Scripts\MapGenerator.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\BaseAI.cs" Line="117" Column="51" />
-      <File FileName="Assets\Scripts\AI\AIType.cs" Line="50" Column="70" />
+      <File FileName="Assets\Scripts\AI\BaseAI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI\AIType.cs" Line="46" Column="16" />
       <File FileName="Assets\Scripts\HealthMonitor.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\HealthController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DestroyBySword.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\PuritySentinel.cs" Line="16" Column="27" />
+      <File FileName="Assets\Scripts\HealthController.cs" Line="8" Column="2" />
+      <File FileName="Assets\Scripts\AI\PuritySentinel.cs" Line="32" Column="3" />
+      <File FileName="Assets\Scripts\AI\IEnemy.cs" Line="4" Column="34" />
+      <File FileName="Assets\Scripts\AI\Move.cs" Line="14" Column="1" />
+      <File FileName="Assets\Scripts\AI\IAction.cs" Line="5" Column="18" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

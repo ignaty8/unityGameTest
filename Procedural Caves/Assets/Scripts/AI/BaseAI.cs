@@ -22,6 +22,7 @@ public class BaseAI : MonoBehaviour {
 	public float test;
 	bool noticed;
 	float notice_threshold = 100f;
+	float notice_threshold_critical = 200f;
 
 	//GettingAIType variables
 	public AIType type;
@@ -54,6 +55,7 @@ public class BaseAI : MonoBehaviour {
 	//Start Happens AFTER Awake
 	// Use this for initialization
 	void Start () {
+		HealthCntrl.objectHealthMax = 100 * type.toughness;
 		noticed = false;
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		timer = 0;
@@ -64,9 +66,9 @@ public class BaseAI : MonoBehaviour {
 
 	void Awake ()
 	{
-		HealthCntrl = GetComponent<HealthController>;
-		type = GetComponent<AIType>;
-		HealthCntrl.objectHealthMax = 100 * type.toughness;
+		HealthCntrl = GetComponent<HealthController>();
+		type = GetComponent<AIType>();
+
 	}
 
 	// Update is called once per frame
@@ -79,6 +81,9 @@ public class BaseAI : MonoBehaviour {
 
 		//Checking vision
 		vision();
+
+		//Updating Status
+		StatusCheck();
 
 
 	}
@@ -99,8 +104,21 @@ public class BaseAI : MonoBehaviour {
 			if (Physics.Raycast (LoS, out Hit, 40, myLayerMask)) {
 				//Gets what we hit and checks it
 				if (Hit.collider.CompareTag ("Player")) {
-					notice += 1 * attention * attention 
-						/ Vector3.Distance(transform.position + height,player.transform.position + player_height);
+					/*
+					 General Idea :
+					 higher attention increases chance to notice DRAMATICALLY (hence its squared)
+					 notice however increases less if distance is high
+					*/
+					notice += 1 * attention * attention
+					/ Vector3.Distance (transform.position, player.transform.position);
+					//removed the height component because unnecessary
+				} else {
+					/*
+					  General Idea :
+					  Higher attention makes you less likely to not notice (hence dividing here)
+					  Over Large distances it is easier to lose the player
+					*/
+					notice -= 1 * Vector3.Distance (transform.position, player.transform.position) / attention;
 				}
 			}
 
@@ -131,7 +149,9 @@ public class BaseAI : MonoBehaviour {
 		/*
 		if notice >= 100 & noticed = false
 		We just NOTICED the player hence :
-		Increase notice & set noticed to true 
+		Increase notice & set noticed to true
+		The notice * 2 accounts for the fact that "realistically" you would look out for the player & thus have increased notice
+		this also triggers the critical notice threshold systematically
 		*/
 		if (notice >= notice_threshold && noticed == false) {
 			noticed = true;

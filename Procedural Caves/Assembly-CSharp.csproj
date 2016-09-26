@@ -150,6 +150,9 @@
      <Compile Include="Assets\OVR\Scripts\Util\OVRVisionGuide.cs" />
      <Compile Include="Assets\Scripts\AI\AIType.cs" />
      <Compile Include="Assets\Scripts\AI\BaseAI.cs" />
+     <Compile Include="Assets\Scripts\AI\IAction.cs" />
+     <Compile Include="Assets\Scripts\AI\IEnemy.cs" />
+     <Compile Include="Assets\Scripts\AI\Move.cs" />
      <Compile Include="Assets\Scripts\AI\PathFinder.cs" />
      <Compile Include="Assets\Scripts\AI\PathGridGenerator.cs" />
      <Compile Include="Assets\Scripts\AI\PuritySentinel.cs" />

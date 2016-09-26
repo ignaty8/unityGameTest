@@ -34,7 +34,7 @@ public class PathGridGenerator : MonoBehaviour {
 
         for (int x = 0; x < map.GetLength(0); x++) {
             for (int y = 0; y < map.GetLength(1); y++) {
-                
+                //what ?
             }
         }
 

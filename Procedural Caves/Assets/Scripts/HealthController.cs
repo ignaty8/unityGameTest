@@ -5,7 +5,7 @@ public class HealthController : MonoBehaviour {
 
 	public float objectHealthMax;
 	public float objectHealth;
-	
+
 	// Use this for initialization
 	void Start () {
 		objectHealth = objectHealthMax;

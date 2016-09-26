@@ -6,20 +6,23 @@ using System.Collections;
 
 public class AIType : MonoBehaviour {
 	//Range of attacks
-	public float range;
+	[HideInInspector] public float range;
 	//Attack power
-	public float damage;
+	[HideInInspector] public float damage;
 	//affects damage taken by player
-	public float toughness;
+	[HideInInspector] public float toughness;
 	//Special Behaviour describes behaviour specific to this AI
 	//in practice this is ANY behaviour that is not just walking towards the player
-	public float SpecBehavRange;
+	[HideInInspector] public float SpecBehavRange;
 	//Height of creature
-	public Vector3 height;
+	[HideInInspector] public Vector3 height;
 	//type
-	public string TypeName;
+	[HideInInspector] public string TypeName;
 	//Reference to BaseAI
-	public BaseAI Base;
+	[HideInInspector] BaseAI Base;
+	[HideInInspector] IEnemy EnemyScript;
+	[HideInInspector] PuritySentinel SentinelScript;
+	[HideInInspector] Move MoveScript;
 
 	//Self-explanetory
 	Transform player;
@@ -28,8 +31,8 @@ public class AIType : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
-		if(TypeName == "PuritySentinel"){
-			PuritySentinel script = GetComponent<PuritySentinel>;
+		if (TypeName == "PuriteSentinel") {
+			EnemyScript = SentinelScript;
 		}
 	}
 	
@@ -40,6 +43,7 @@ public class AIType : MonoBehaviour {
 
 	public void act(){
 		//Acting
+		RangeCheck();
 	}
 
 	public void idle(){
@@ -48,10 +52,14 @@ public class AIType : MonoBehaviour {
 
 	public void RangeCheck(){
 		Vector3 RangeVector = player.transform.position - transform.position;
-		if(RangeVector.Magnitude <= SpecBehavRange){
-			if(TypeName == "PuritySentinel"){
-				script
-			}
+		if (RangeVector.magnitude <= SpecBehavRange) {
+			//Launches the Enemy Unique Script Action Loop
+			EnemyScript.ActionLoop ();
+		} else {
+			//Moves The Enemy Closer To the Player
+			MoveScript.ActionLoop();
 		}
 	}
+
+
 }

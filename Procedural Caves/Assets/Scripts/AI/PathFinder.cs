@@ -11,7 +11,7 @@ public class PathFinder : MonoBehaviour {
 	public float tolerance;
 	//RBN, Random Big Number
 	//nothin in this code should be bigger
-	static float infinity =100000000;
+	static float infinity = Single.MaxValue;
 	//Placeholder used sometimes as default value for scripts where it is not obvious we will find a value
 	static PathGridGenerator.Coords origin_coords = new PathGridGenerator.Coords(0,0,0);
 	static NodePathFinder origin_node = new NodePathFinder(origin_coords);
