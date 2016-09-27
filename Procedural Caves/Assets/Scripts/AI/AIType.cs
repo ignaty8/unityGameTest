@@ -11,6 +11,8 @@ public class AIType : MonoBehaviour {
 	[HideInInspector] public float damage;
 	//affects damage taken by player
 	[HideInInspector] public float toughness;
+	//Speed
+	[HideInInspector] public float speed;
 	//Special Behaviour describes behaviour specific to this AI
 	//in practice this is ANY behaviour that is not just walking towards the player
 	[HideInInspector] public float SpecBehavRange;

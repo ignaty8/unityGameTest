@@ -26,8 +26,10 @@ public class PuritySentinel : MonoBehaviour, IEnemy {
 		type.range = 100;
 		type.damage = 1;
 		type.toughness = 1;
+		type.speed = 4;
 		type.SpecBehavRange = 200;
 		type.height = new Vector3(0,1,0);
 		type.TypeName = "PuritySentinel";
+
 	}
 }

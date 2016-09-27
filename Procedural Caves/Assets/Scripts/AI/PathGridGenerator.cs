@@ -208,6 +208,26 @@ public class PathGridGenerator : MonoBehaviour {
 		return x - COORD_SENSITIVITY < y && x + COORD_SENSITIVITY > y;
 	}
 
+	//Converts Coords to Vector3
+	public Vector3 CoordsToVector(Coords coordinates){
+		
+		Vector3 output;
+
+		output = new Vector3 ((float)coordinates.x, (float)coordinates.y, (float)coordinates.z);
+
+		return output;
+
+	}
+
+	//Converts Vector3 To Coords
+	public Coords VectorToCoords(Vector3 vector){
+		Coords output;
+
+		output = new Coords (vector.x, vector.y, vector.z);
+
+		return output;
+	}
+
 
 
 

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-//Might remove the above, but I need the below to use Maths
 using System;
 
 public class PathFinder : MonoBehaviour {
@@ -15,6 +14,8 @@ public class PathFinder : MonoBehaviour {
 	//Placeholder used sometimes as default value for scripts where it is not obvious we will find a value
 	static PathGridGenerator.Coords origin_coords = new PathGridGenerator.Coords(0,0,0);
 	static NodePathFinder origin_node = new NodePathFinder(origin_coords);
+
+
 
 
 	//Should be imported, but I will put it here for now
@@ -39,7 +40,7 @@ public class PathFinder : MonoBehaviour {
 	//Pathfinder function//
 
 	//PathGridGenerator is another Script/monobehaviour class containing the Node & Coords Class
-	public List<NodePathFinder> Pathfinder(PathGridGenerator.Coords OriginCoords, PathGridGenerator.Coords DestinationCoords, PathGridGenerator.Graph graph){
+	public static List<NodePathFinder> Pathfinder(PathGridGenerator.Coords OriginCoords, PathGridGenerator.Coords DestinationCoords, PathGridGenerator.Graph graph){
 		//This pathfinder uses the standard A* pathfinding program
 
 
@@ -166,7 +167,7 @@ public class PathFinder : MonoBehaviour {
 	//Sets up a NodePathFinder with identical values and standard pathfinder values
 	//adds it to memory
 	//returns that NodePathfinder
-	public NodePathFinder GetNewNodePathfinder(
+	static NodePathFinder GetNewNodePathfinder(
 												SortedDictionary<PathGridGenerator.Coords,PathGridGenerator.Node> dictionary,
 												SortedDictionary<PathGridGenerator.Coords,NodePathFinder> memory,
 												PathGridGenerator.Coords coord){
@@ -184,7 +185,7 @@ public class PathFinder : MonoBehaviour {
 	}
 
 	//Gets the node with lowest Fcost in Nodes
-	public NodePathFinder GetCheapest(HashSet<NodePathFinder> Nodes){
+	static NodePathFinder GetCheapest(HashSet<NodePathFinder> Nodes){
 		//DANGER DANGER, TEST BELOW
 		//output stores the node which for now has lowest fcost
 		//Initialisation
@@ -232,7 +233,7 @@ public class PathFinder : MonoBehaviour {
 		return Math.Sqrt (double_);
 		}
 
-	public List<NodePathFinder> GetPath(
+	static List<NodePathFinder> GetPath(
 										NodePathFinder origin,
 										NodePathFinder destination,
 										SortedDictionary<PathGridGenerator.Coords,NodePathFinder> dictionary){
